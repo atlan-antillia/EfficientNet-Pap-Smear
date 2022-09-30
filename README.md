@@ -74,7 +74,7 @@ You will have the following directory tree:<br>
 <b>New database pictures</b> downloaded from the following website:<br> 
  <a href="http://mde-lab.aegean.gr/index.php/downloads">PAP-SMEAR (DTU/HERLEV) DATABASES & RELATED STUDIES</a>
 <br> 
- Furthermore, we have created <b>Pap_Smear_Imaged dataset</b> from <b>Resized_Pap_Smear_Images_jpg_master_200x200</b> 
+ Furthermore, we have created <b>Pap_Smear_Image</b> dataset from <b>Resized_Pap_Smear_Images_jpg_200x200_master</b> 
  by using <a href="./projects/Pap-Smear/split_master.py">split_master.py</a> script.<br>
 <br>
 The number of images of train and test image dataset:<br>
