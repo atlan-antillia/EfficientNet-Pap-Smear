@@ -1,0 +1,7 @@
+carcinoma_in_situ
+light_dysplastic
+moderate_dysplastic
+normal_columnar
+normal_intermediate
+normal_superficiel
+severe_dysplastic
