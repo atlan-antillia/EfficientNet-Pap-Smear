@@ -394,4 +394,11 @@ Shanthi P B,1 Faraz Faruqi, Hareesha K S, and Ranjini Kudva<br>
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7062987/
 </pre>
 
+<b>
+4. DeepCyto: a hybrid framework for cervical cancer classification by using deep feature fusion of cytology images</b><br>
+Swati Shinde, Madhura Kalbhor, Pankaj Wajire<br>
+<pre>
+https://www.aimspress.com/article/doi/10.3934/mbe.2022301?viewType=HTML#b40
+</pre>
+
 
