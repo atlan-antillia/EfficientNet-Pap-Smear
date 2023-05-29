@@ -101,25 +101,25 @@ The number of images of train and test image dataset:<br>
 <img src="./projects/Pap-Smear/_PapSmearImages_.png" width="820" height="auto">
 <br>
 <br>
-1 Sample images in Pap_Smear_Images/train/carcinoma_in_situ:<br>
+1 Sample images in PapSmearImages/train/carcinoma_in_situ:<br>
 <img src="./asset/train_carcinoma_in_situ.png"  width="820" height="auto"><br><br>
 
-2 Sample images in Pap_Smear_Images/train/light_dysplastic:<br>
+2 Sample images in PapSmearImages/train/light_dysplastic:<br>
 <img src="./asset/train_light_dysplastic.png"  width="820" height="auto"><br><br>
 
-3 Sample images in Pap_Smear_Images/train/moderate_dysplastic:<br>
+3 Sample images in PapSmearImages/train/moderate_dysplastic:<br>
 <img src="./asset/train_moderate_dysplastic.png"  width="820" height="auto"><br><br>
 
-4 Sample images in Pap_Smear_Images/train/normal_columnar:<br>
+4 Sample images in PapSmearImages/train/normal_columnar:<br>
 <img src="./asset/train_normal_columnar.png"  width="820" height="auto"><br><br>
 
-5 Sample images in Pap_Smear_Images/train/normal_intermediate:<br>
+5 Sample images in PapSmearImages/train/normal_intermediate:<br>
 <img src="./asset/train_normal_intermediate.png"  width="820" height="auto"><br><br>
 
-6 Sample images in Pap_Smear_Images/train/normal_superficiel:<br>
+6 Sample images in PapSmearImages/train/normal_superficiel:<br>
 <img src="./asset/train_normal_superficiel.png"  width="820" height="auto"><br><br>
 
-7 Sample images in Pap_Smear_Images/train/severe_dysplastic:<br>
+7 Sample images in PapSmearImages/train/severe_dysplastic:<br>
 <img src="./asset/train_severe_dysplastic.png"  width="820" height="auto"><br><br>
 
 
