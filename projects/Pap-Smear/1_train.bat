@@ -1,3 +1,4 @@
+rem 2023/05/29 
 rem 1_train.bat
 python ../../EfficientNetV2ModelTrainer.py ^
   --model_dir=./models ^
@@ -7,15 +8,15 @@ python ../../EfficientNetV2ModelTrainer.py ^
   --optimizer=adam ^
   --image_size=224 ^
   --eval_image_size=224 ^
-  --data_dir=./Pap_Smear_Images/train ^
+  --data_dir=./PapSmearImages/train ^
   --model_dir=./models ^
   --data_augmentation=True ^
-  --valid_data_augmentation=True ^
+  --valid_data_augmentation=False ^
   --fine_tuning=True ^
   --monitor=val_loss ^
-  --learning_rate=0.0002 ^
+  --learning_rate=0.0001 ^
   --trainable_layers_ratio=0.4 ^
-  --dropout_rate=0.4 ^
+  --dropout_rate=0.2 ^
   --num_epochs=80 ^
   --batch_size=4 ^
   --patience=10 ^

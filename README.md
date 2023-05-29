@@ -1,5 +1,5 @@
 <h2>
-EfficientNet Pap Smear (Updated: 2022/10/01)
+EfficientNet Pap Smear (Updated: 2023/05/30)
 </h2>
 <a href="#1">1 EfficientNetV2 Pap Smear Classification </a><br>
 <a href="#1.1">1.1 Clone repository</a><br>
@@ -27,9 +27,12 @@ The Pap Smear dataset used here has been taken from the following web site:<br>
 <br>
 <br>
 
- We use python 3.8 and tensorflow 2.8.0 environment on Windows 11 for this project.<br>
+ We use python 3.8 and tensorflow 2.10.1 environment on Windows 11 for this project.<br>
 <br>
-   
+<li>
+2023/05/30 Recreated Augmented <b>PapSmearImage/train</b> dataset by resizing and rotating the original images. 
+</li>
+<br>   
 <h3>
 <a id="1.1">1.1 Clone repository</a>
 </h3>
@@ -41,44 +44,61 @@ You will have the following directory tree:<br>
 <pre>
 .
 ├─asset
+├─efficientnetv2-b0
 └─projects
     └─Pap-Smear
         ├─eval
         ├─evaluation
         ├─inference
         ├─models
-        ├─Pap_Smear_Images
-        ├─test
-        │  ├─carcinoma_in_situ
-        │  ├─light_dysplastic
-        │  ├─moderate_dysplastic
-        │  ├─normal_columnar
-        │  ├─normal_intermediate
-        │  ├─normal_superficiel
-        │  └─severe_dysplastic
-        ├─train
-        │  ├─carcinoma_in_situ
-        │  ├─light_dysplastic
-        │  ├─moderate_dysplastic
-        │  ├─normal_columnar
-        │  ├─normal_intermediate
-        │  ├─normal_superficiel
-        │  └─severe_dysplastic
+        │  └─chief
+        ├─PapSmearImages
+        │  ├─test
+        │  │  ├─carcinoma_in_situ
+        │  │  ├─light_dysplastic
+        │  │  ├─moderate_dysplastic
+        │  │  ├─normal_columnar
+        │  │  ├─normal_intermediate
+        │  │  ├─normal_superficiel
+        │  │  └─severe_dysplastic
+        │  └─train
+        │      ├─carcinoma_in_situ
+        │      ├─light_dysplastic
+        │      ├─moderate_dysplastic
+        │      ├─normal_columnar
+        │      ├─normal_intermediate
+        │      ├─normal_superficiel
+        │      └─severe_dysplastic
         └─test
 </pre>
+
 <h3>
 <a id="1.2">1.2 Prepare Pap_Smear_Images</a>
 </h3>
+<h3>
+1.2.1 Expand original images
+</h3>
+
  We have created <b>Resized_Pap_Smear_Images_jpg_200x200_master</b> dataset 
  by using <a href="./projects/Pap-Smear/expand.py">expand.py</a> script from the original dataset
 <b>New database pictures</b> downloaded from the following website:<br> 
  <a href="http://mde-lab.aegean.gr/index.php/downloads">PAP-SMEAR (DTU/HERLEV) DATABASES & RELATED STUDIES</a>
 <br> 
+<h3>
+1.2.2 Split master
+</h3>
  Furthermore, we have created <b>Pap_Smear_Image</b> dataset from <b>Resized_Pap_Smear_Images_jpg_200x200_master</b> 
  by using <a href="./projects/Pap-Smear/split_master.py">split_master.py</a> script.<br>
 <br>
+<h3>
+1.2.3 Augment train dataset
+</h3>
+ We have created augmented <b>PapSmearImage</b> dataset from the <b>Pap_Smear_Image/train</b> dataset by resizing
+image files in that folder to 224x224, and rotating those resized images by angle in angles =[0, 90, 180, 270].<br>
+<br>
+ 
 The number of images of train and test image dataset:<br>
-<img src="./projects/Pap-Smear/_Pap_Smear_Images_.png" width="820" height="auto">
+<img src="./projects/Pap-Smear/_PapSmearImages_.png" width="820" height="auto">
 <br>
 <br>
 1 Sample images in Pap_Smear_Images/train/carcinoma_in_situ:<br>
@@ -153,7 +173,7 @@ We have defined the following python classes to implement our Pap Smear Classifi
 <a id="3">3 Pretrained model</a>
 </h2>
  We have used pretrained <b>efficientnetv2-b0</b> to train Pap Smear Classification Model by using
- the dataset <b>./projects/Pap-Smear/Pap_Smear_Images/train</b>.
+ the dataset <b>./projects/Pap-Smear/PapSmearImages/train</b>.
 
 <br> 
 Please download the pretrained checkpoint file from <a href="https://storage.googleapis.com/cloud-tpu-checkpoints/efficientnet/v2/efficientnetv2-b0.tgz">efficientnetv2-b0.tgz</a>, expand it, and place the model under our top repository.
@@ -180,6 +200,7 @@ using  the dataset <b>./projects/Pap-Smear/Pap_Smear_Images/train</b> derived fr
 ./1_train.bat
 </pre>
 <pre>
+rem 2023/05/29 
 rem 1_train.bat
 python ../../EfficientNetV2ModelTrainer.py ^
   --model_dir=./models ^
@@ -189,19 +210,20 @@ python ../../EfficientNetV2ModelTrainer.py ^
   --optimizer=adam ^
   --image_size=224 ^
   --eval_image_size=224 ^
-  --data_dir=./Pap_Smear_Images/train ^
+  --data_dir=./PapSmearImages/train ^
   --model_dir=./models ^
   --data_augmentation=True ^
-  --valid_data_augmentation=True ^
+  --valid_data_augmentation=False ^
   --fine_tuning=True ^
   --monitor=val_loss ^
-  --learning_rate=0.0002 ^
+  --learning_rate=0.0001 ^
   --trainable_layers_ratio=0.4 ^
-  --dropout_rate=0.4 ^
+  --dropout_rate=0.2 ^
   --num_epochs=80 ^
   --batch_size=4 ^
   --patience=10 ^
   --debug=True  
+
 </pre>
 ,where data_generator.config is the following<br>
 <pre>
@@ -221,7 +243,8 @@ vertical_flip      = True
 width_shift_range  = 0.1
 height_shift_range = 0.1
 shear_range        = 0.01
-zoom_range         = [0.1, 2.0]
+zoom_range         = [0.2, 3.0]
+
 data_format        = "channels_last"
 [validation]
 validation_split   = 0.2
@@ -251,7 +274,7 @@ and <a href="./projects/Pap-Smear/eval/train_losses.csv">train_losses</a> files
 Training console output:<br>
 
 <br>
-<img src="./asset/Pap_Smear_train_console_output_at_epoch_27_1001.png" width="840" height="auto"><br>
+<img src="./asset/Pap_Smear_train_console_output_at_epoch_45_0529.png" width="840" height="auto"><br>
 
 As shown above, please note that the <b>best_model.h5</b> has been saved at epoch 17.
 <br>
@@ -282,7 +305,7 @@ python ../../EfficientNetV2Inferencer.py ^
   --model_dir=./models ^
   --fine_tuning=True ^
   --trainable_layers_ratio=0.4 ^
-  --dropout_rate=0.4 ^
+  --dropout_rate=0.2 ^
   --image_path=./test/*.jpg ^
   --eval_image_size=224 ^
   --label_map=./label_map.txt ^
@@ -308,9 +331,9 @@ severe_dysplastic
 </h3>
 
 Sample test images generated by <a href="./projects/Pap-Smear/create_test_dataset.py">create_test_dataset.py</a> 
-from <a href="./projects/Pap-Smear/Pap_Smear_Images/test">Pap_Smear_Images/test</a>.
+from <a href="./projects/Pap-Smear/PapSmearImages/test">PapSmearImages/test</a>.
 Pap-Smear/test:<br>
-<img src="./asset/Pap_Smear_test.png" width="820" height="auto">
+<img src="./asset/PapSmeartest.png" width="820" height="auto">
 <br><br>
 
 
@@ -321,10 +344,10 @@ Pap-Smear/test:<br>
 This inference command will generate <a href="./projects/Pap-Smear/inference/inference.csv">inference result file</a>.
 <br>
 Inference console output:<br>
-<img src="./asset/Pap_Smear_infer_console_output_at_epoch_27_1001.png" width="840" height="auto"><br>
+<img src="./asset/Pap_Smear_infer_console_output_at_epoch_45_0529.png" width="840" height="auto"><br>
 <br>
 Inference result:<br>
-<img src="./asset/Pap_Smear_inference_result_at_epoch_27_1001.png" width="740" height="auto"><br>
+<img src="./asset/Pap_Smear_inference_result_at_epoch_45_0529.png" width="740" height="auto"><br>
 
 
 <h2>
@@ -333,7 +356,7 @@ Inference result:<br>
 <h3>
 <a id="6.1">6.1 Evaluation script</a>
 </h3>
-Please run the following bat file to evaluate <a href="./projects/Pap-Smear/Pap_Smear_Image/test">Pap-Smear/Pap_Smear_Image/test dataset</a> by the trained model.<br>
+Please run the following bat file to evaluate <a href="./projects/Pap-Smear/PapSmearImage/test">Pap-Smear/PapSmearImage/test dataset</a> by the trained model.<br>
 <pre>
 ./3_evaluate.bat
 </pre>
@@ -342,11 +365,11 @@ rem 3_evaluate.bat
 python ../../EfficientNetV2Evaluator.py ^
   --model_name=efficientnetv2-b0  ^
   --model_dir=./models ^
-  --data_dir=./Pap_Smear_Images/test ^
+  --data_dir=./PapSmearImages/test ^
   --evaluation_dir=./evaluation ^
   --fine_tuning=True ^
   --trainable_layers_ratio=0.4 ^
-  --dropout_rate=0.4 ^
+  --dropout_rate=0.2 ^
   --eval_image_size=224 ^
   --label_map=./label_map.txt ^
   --mixed_precision=True ^
@@ -363,11 +386,11 @@ This evaluation command will generate <a href="./projects/Pap-Smear/evaluation/c
 <br>
 <br>
 Evaluation console output:<br>
-<img src="./asset/Pap_Smear_evaluate_console_output_at_epoch_27_1001.png" width="840" height="auto"><br>
+<img src="./asset/Pap_Smear_evaluate_console_output_at_epoch_45_0529.png" width="840" height="auto"><br>
 <br>
 
 Classification report:<br>
-<img src="./asset/Pap_Smear_classification_report_at_epoch_27_1001.png" width="740" height="auto"><br>
+<img src="./asset/Pap_Smear_classification_report_at_epoch_45_0529.png" width="740" height="auto"><br>
 <br>
 Confusion matrix:<br>
 <img src="./projects/Pap-Smear/evaluation/confusion_matrix.png" width="740" height="auto"><br>

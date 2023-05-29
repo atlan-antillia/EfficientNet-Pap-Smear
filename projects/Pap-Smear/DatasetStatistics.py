@@ -97,7 +97,9 @@ class DatasetStatistics:
 
 # python DatasetStatistics.py ./MonkeyPox-Images/
 if __name__ == "__main__":
-  dataset_dir = "./Pap_Smear_Images/"
+  #dataset_dir = "./Pap_Smear_Images/"
+  dataset_dir = "./PapSmearImages/"
+
   try:
     #dataset_dir = ""
     if len(sys.argv) == 2:
